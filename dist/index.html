@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Lit Schema Form Explorer</title>
+  <style>
+    body { margin: 0; font-family: system-ui; display: flex; height: 100vh; background: #f5f5f5; }
+    .col { flex: 1; display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; }
+    .left { border-right: 1px solid #e0e0e0; background: #fff; }
+    textarea { flex: 1; font-family: monospace; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px; resize: none; }
+    pre { background: #222; color: #00ff00; padding: 15px; border-radius: 6px; overflow-x: auto; max-height: 200px; }
+  </style>
+  <script type="module" crossorigin src="/SchemaForm/assets/index-CWDCxnT4.js"></script>
+</head>
+<body>
+
+  <div class="col left">
+    <h3>1. JSON Schema Config</h3>
+    <textarea id="editor"></textarea>
+    <h3>3. Output Data Live</h3>
+    <pre id="output">{}</pre>
+  </div>
+
+  <div class="col right">
+    <h3>2. Generated Form</h3>
+    <schema-form id="form-preview"></schema-form>
+  </div>
+
+</body>
+</html>
