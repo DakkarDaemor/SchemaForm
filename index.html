@@ -10,7 +10,6 @@
     textarea { flex: 1; font-family: monospace; padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px; resize: none; }
     pre { background: #222; color: #00ff00; padding: 15px; border-radius: 6px; overflow-x: auto; max-height: 200px; }
   </style>
-  <script type="module" crossorigin src="/SchemaForm/assets/index-CWDCxnT4.js"></script>
 </head>
 <body>
 
@@ -25,6 +24,82 @@
     <h3>2. Generated Form</h3>
     <schema-form id="form-preview"></schema-form>
   </div>
-
+
+  <script type="module">
+    import './src/schema-form.js';
+
+    const initialSchema = {
+      type: "object",
+      required: ["username", "email"],
+      properties: {
+        username: { 
+          type: "string", 
+          title: "Nome Utente",
+          minLength: 3,
+          maxLength: 20
+        },
+        email: {
+          type: "string",
+          title: "Email",
+          format: "email"
+        },
+        ruolo: {
+          type: "string",
+          title: "Ruolo",
+          enum: ["admin", "user", "guest"],
+          default: "user"
+        },
+        eta: { 
+          type: "integer", 
+          title: "Età", 
+          minimum: 0, 
+          maximum: 150 
+        },
+        accountAttivo: { 
+          type: "boolean", 
+          title: "Account Attivo",
+          default: true
+        },
+        via: {
+          type: "object",
+          title: "Via",
+          properties: {
+            nome: { type: "string", title: "Nome" },
+            numero: { type: "integer", title: "Numero Civico", minimum: 1 }
+          }
+        },
+        tags: {
+          type: "array",
+          title: "Tag",
+          items: { type: "string" },
+          minItems: 1,
+          maxItems: 5
+        }
+      }
+    };
+
+    const editor = document.getElementById('editor');
+    const formPreview = document.getElementById('form-preview');
+    const output = document.getElementById('output');
+
+    // Inizializzazione
+    editor.value = JSON.stringify(initialSchema, null, 2);
+    formPreview.schema = initialSchema;
+
+    // Ascolto modifiche nell'editor di testo
+    editor.addEventListener('input', (e) => {
+      try {
+        const parsed = JSON.parse(e.target.value);
+        formPreview.schema = parsed;
+      } catch (err) {
+        // Silenzioso finché il JSON non torna valido durante la digitazione
+      }
+    });
+
+    // Ascolto modifiche dal Form generato in Lit
+    formPreview.addEventListener('form-changed', (e) => {
+      output.textContent = JSON.stringify(e.detail.value, null, 2);
+    });
+  </script>
 </body>
 </html>
